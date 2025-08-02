@@ -71,6 +71,13 @@ A modern, responsive web application built for She Foundation, an NGO dedicated 
 - Node.js (v14 or higher)
 - npm or yarn package manager
 
+### **Environment Setup**
+1. **Copy environment template:**
+   ```bash
+   cp config.env.example .env
+   ```
+2. **Update the `.env` file** with your specific values (database URLs, API keys, etc.)
+
 ### **Installation**
 
 1. **Clone the repository**
@@ -178,7 +185,32 @@ SheFoundation/
 
 ## 🚀 Deployment
 
-### **Frontend Only (Recommended)**
+### **Quick Deploy to Render (Recommended)**
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md)
+
+#### **Option 1: Frontend Only (Free)**
+```bash
+# 1. Build the project
+cd client && npm run build
+
+# 2. Deploy to Render Static Site
+# - Go to dashboard.render.com
+# - Create new Static Site
+# - Connect your GitHub repository
+# - Build Command: cd client && npm install && npm run build
+# - Publish Directory: client/build
+```
+
+#### **Option 2: Full Stack (Free)**
+```bash
+# 1. Set up MongoDB Atlas (free)
+# 2. Deploy Backend to Render Web Service
+# 3. Deploy Frontend to Render Static Site
+# 4. Configure environment variables
+```
+
+### **Manual Deployment**
 ```bash
 # Build for production
 cd client
@@ -188,11 +220,11 @@ npm run build
 # (Netlify, Vercel, GitHub Pages, etc.)
 ```
 
-### **Full Stack Deployment**
-1. **Backend**: Deploy to Render, Heroku, or AWS
-2. **Frontend**: Deploy to static hosting service
-3. **Database**: Set up MongoDB Atlas or local database
-4. **Environment Variables**: Configure API endpoints and database connections
+### **Environment Setup**
+1. Copy environment template: `cp config.env.example .env`
+2. Update variables for your deployment
+3. Set up MongoDB Atlas (for full stack)
+4. Configure Render environment variables
 
 ## 🤝 Contributing
 

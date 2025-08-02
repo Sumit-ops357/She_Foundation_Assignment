@@ -35,8 +35,8 @@ const Signup = ({ onLogin }) => {
       if (formData.name && formData.email && formData.password) {
         const dummyUser = {
           id: Math.floor(Math.random() * 1000) + 1,
-          name: formData.name,
-          email: formData.email,
+        name: formData.name,
+        email: formData.email,
           totalRaised: 0,
           referralCode: formData.name.toLowerCase().replace(/\s+/g, '') + '2025',
           rewards: [
@@ -152,7 +152,7 @@ const Signup = ({ onLogin }) => {
               />
             </div>
             
-            <h1 style={{ 
+          <h1 style={{ 
               fontSize: '2.5rem', 
               fontWeight: '800', 
               marginBottom: '8px',
@@ -212,7 +212,7 @@ const Signup = ({ onLogin }) => {
           <div style={{ marginBottom: '30px' }}>
             <h3 style={{ 
               fontSize: '1.2rem', 
-              fontWeight: '700', 
+            fontWeight: '700', 
               marginBottom: '15px',
               color: 'rgba(255, 255, 255, 0.95)',
               textAlign: 'center'
@@ -367,8 +367,8 @@ const Signup = ({ onLogin }) => {
                   margin: '10px 0 0 0'
                 }}>
                   Supporting women & children
-                </p>
-              </div>
+          </p>
+        </div>
 
               {/* Education Support Image */}
               <div style={{
@@ -500,100 +500,100 @@ const Signup = ({ onLogin }) => {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '1.2rem' }}>⚠️</span>
-                {error}
+            {error}
               </div>
-            </div>
-          )}
+          </div>
+        )}
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
               <label htmlFor="name" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
                 Full Name
               </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="Enter your full name"
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Enter your full name"
                 style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '2px solid rgba(255, 255, 255, 0.2)',
                   color: 'white',
                   backdropFilter: 'blur(10px)'
                 }}
-              />
-            </div>
+            />
+          </div>
 
-            <div className="form-group">
+          <div className="form-group">
               <label htmlFor="email" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
                 Email Address
               </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="Enter your email"
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="Enter your email"
                 style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '2px solid rgba(255, 255, 255, 0.2)',
                   color: 'white',
                   backdropFilter: 'blur(10px)'
                 }}
-              />
-            </div>
+            />
+          </div>
 
-            <div className="form-group">
+          <div className="form-group">
               <label htmlFor="password" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                placeholder="Create a password"
-                minLength="6"
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Create a password"
+              minLength="6"
                 style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '2px solid rgba(255, 255, 255, 0.2)',
                   color: 'white',
                   backdropFilter: 'blur(10px)'
                 }}
-              />
-            </div>
+            />
+          </div>
 
-            <div className="form-group">
+          <div className="form-group">
               <label htmlFor="confirmPassword" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
                 Confirm Password
               </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-                placeholder="Confirm your password"
-                minLength="6"
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              placeholder="Confirm your password"
+              minLength="6"
                 style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '2px solid rgba(255, 255, 255, 0.2)',
                   color: 'white',
                   backdropFilter: 'blur(10px)'
                 }}
-              />
-            </div>
+            />
+          </div>
 
-            <button
-              type="submit"
+          <button
+            type="submit"
               className="btn btn-primary glow"
               style={{ 
                 width: '100%',
@@ -605,8 +605,8 @@ const Signup = ({ onLogin }) => {
                 position: 'relative',
                 overflow: 'hidden'
               }}
-              disabled={loading}
-            >
+            disabled={loading}
+          >
               {loading ? (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div className="loading-spinner" style={{ width: '20px', height: '20px' }}></div>
@@ -618,21 +618,21 @@ const Signup = ({ onLogin }) => {
                   Create Account
                 </div>
               )}
-            </button>
-          </form>
+          </button>
+        </form>
 
           <div className="text-center mt-8">
             <p style={{ color: 'rgba(255, 255, 255, 0.7)', marginBottom: '16px' }}>
-              Already have an account?{' '}
+            Already have an account?{' '}
               <Link to="/login" style={{ 
                 color: '#ffd700', 
                 textDecoration: 'none',
                 fontWeight: '600',
                 transition: 'all 0.3s ease'
               }}>
-                Sign in here
-              </Link>
-            </p>
+              Sign in here
+            </Link>
+          </p>
           </div>
         </div>
       </div>

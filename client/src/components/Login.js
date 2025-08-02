@@ -112,11 +112,11 @@ const Login = ({ onLogin }) => {
           color: 'white',
           padding: '40px',
           background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(20px)',
+        backdropFilter: 'blur(20px)',
           borderRadius: '20px',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-        }}>
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+      }}>
           {/* Logo and Title */}
           <div style={{ textAlign: 'center', marginBottom: '30px' }}>
             <div style={{
@@ -443,164 +443,164 @@ const Login = ({ onLogin }) => {
           background: 'rgba(255, 255, 255, 0.1)'
         }}>
           {/* Login form header */}
-          <div className="text-center mb-8">
-            <div style={{
-              width: '80px',
-              height: '80px',
+        <div className="text-center mb-8">
+          <div style={{
+            width: '80px',
+            height: '80px',
               background: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)',
-              borderRadius: '50%',
-              margin: '0 auto 20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+            borderRadius: '50%',
+            margin: '0 auto 20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
               boxShadow: '0 10px 30px rgba(255, 107, 53, 0.3)',
-              animation: 'pulse 2s ease-in-out infinite'
-            }}>
+            animation: 'pulse 2s ease-in-out infinite'
+          }}>
               <span style={{ fontSize: '2rem', color: 'white' }}>🔐</span>
-            </div>
-            
-            <h1 className="gradient-text" style={{ 
-              fontSize: '2.5rem', 
-              fontWeight: '800', 
-              marginBottom: '8px',
+          </div>
+          
+          <h1 className="gradient-text" style={{ 
+            fontSize: '2.5rem', 
+            fontWeight: '800', 
+            marginBottom: '8px',
               fontFamily: 'Poppins, sans-serif',
               background: 'linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
-            }}>
-              Welcome Back
-            </h1>
-            <p style={{ 
-              color: 'rgba(255, 255, 255, 0.8)', 
-              fontSize: '1.1rem',
-              fontWeight: '400'
-            }}>
-              Sign in to your She Foundation account
-            </p>
+          }}>
+            Welcome Back
+          </h1>
+          <p style={{ 
+            color: 'rgba(255, 255, 255, 0.8)', 
+            fontSize: '1.1rem',
+            fontWeight: '400'
+          }}>
+            Sign in to your She Foundation account
+          </p>
+        </div>
+
+        {error && (
+          <div style={{
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            color: '#fca5a5',
+            padding: '16px',
+            borderRadius: '12px',
+            marginBottom: '24px',
+            backdropFilter: 'blur(10px)',
+            animation: 'bounce 0.5s ease-in-out'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '1.2rem' }}>⚠️</span>
+              {error}
+            </div>
           </div>
+        )}
 
-          {error && (
-            <div style={{
-              background: 'rgba(239, 68, 68, 0.1)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
-              color: '#fca5a5',
-              padding: '16px',
-              borderRadius: '12px',
-              marginBottom: '24px',
-              backdropFilter: 'blur(10px)',
-              animation: 'bounce 0.5s ease-in-out'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '1.2rem' }}>⚠️</span>
-                {error}
-              </div>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="email" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="Enter your email"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  border: '2px solid rgba(255, 255, 255, 0.2)',
-                  color: 'white',
-                  backdropFilter: 'blur(10px)'
-                }}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                placeholder="Enter your password"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  border: '2px solid rgba(255, 255, 255, 0.2)',
-                  color: 'white',
-                  backdropFilter: 'blur(10px)'
-                }}
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="btn btn-primary glow"
-              style={{ 
-                width: '100%',
-                fontSize: '16px',
-                padding: '16px',
-                marginTop: '8px',
-                background: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)',
-                border: 'none',
-                position: 'relative',
-                overflow: 'hidden'
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="Enter your email"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '2px solid rgba(255, 255, 255, 0.2)',
+                color: 'white',
+                backdropFilter: 'blur(10px)'
               }}
-              disabled={loading}
-            >
-              {loading ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div className="loading-spinner" style={{ width: '20px', height: '20px' }}></div>
-                  Signing in...
-                </div>
-              ) : (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span>🚀</span>
-                  Sign In
-                </div>
-              )}
-            </button>
-          </form>
-
-          <div className="text-center mt-8">
-            <p style={{ color: 'rgba(255, 255, 255, 0.7)', marginBottom: '16px' }}>
-              Don't have an account?{' '}
-              <Link to="/signup" style={{ 
-                color: '#ffd700', 
-                textDecoration: 'none',
-                fontWeight: '600',
-                transition: 'all 0.3s ease'
-              }}>
-                Sign up here
-              </Link>
-            </p>
+            />
           </div>
 
-          {/* Demo credentials */}
-          <div className="text-center mt-6">
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '12px',
+          <div className="form-group">
+            <label htmlFor="password" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Enter your password"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '2px solid rgba(255, 255, 255, 0.2)',
+                color: 'white',
+                backdropFilter: 'blur(10px)'
+              }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary glow"
+            style={{ 
+              width: '100%',
+              fontSize: '16px',
               padding: '16px',
-              backdropFilter: 'blur(10px)'
+              marginTop: '8px',
+                background: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)',
+              border: 'none',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            disabled={loading}
+          >
+            {loading ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className="loading-spinner" style={{ width: '20px', height: '20px' }}></div>
+                Signing in...
+              </div>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span>🚀</span>
+                Sign In
+              </div>
+            )}
+          </button>
+        </form>
+
+        <div className="text-center mt-8">
+          <p style={{ color: 'rgba(255, 255, 255, 0.7)', marginBottom: '16px' }}>
+            Don't have an account?{' '}
+            <Link to="/signup" style={{ 
+                color: '#ffd700', 
+              textDecoration: 'none',
+              fontWeight: '600',
+              transition: 'all 0.3s ease'
             }}>
-              <p style={{ 
-                fontSize: '0.875rem', 
-                color: 'rgba(255, 255, 255, 0.8)',
-                marginBottom: '8px',
-                fontWeight: '600'
-              }}>
+              Sign up here
+            </Link>
+          </p>
+        </div>
+
+        {/* Demo credentials */}
+        <div className="text-center mt-6">
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            borderRadius: '12px',
+            padding: '16px',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <p style={{ 
+              fontSize: '0.875rem', 
+              color: 'rgba(255, 255, 255, 0.8)',
+              marginBottom: '8px',
+              fontWeight: '600'
+            }}>
                 🎯 Demo Mode - No Auth Required
-              </p>
-              <div style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+            </p>
+            <div style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.6)' }}>
                 <p>Enter any email and password</p>
                 <p>Example: test@example.com / password123</p>
               </div>
