@@ -36,19 +36,19 @@ A modern, responsive web application built for She Foundation, an NGO dedicated 
 ## 📸 Screenshots
 
 ### Login Page
-![Login Page](screenshots/shot1.png)
+![Login Page](screenshots/shot1.jpg)
 *Beautiful login interface with glass morphism design and impact stories gallery*
 
 ### Signup Page  
-![Signup Page](screenshots/shot2.png)
+![Signup Page](screenshots/shot2.jpg)
 *Complete registration form with foundation information and mission statement*
 
 ### Dashboard
-![Dashboard](screenshots/shot3.png)
+![Dashboard](screenshots/shot3.jpg)
 *Personalized dashboard showing fundraising progress, referral codes, and achievements*
 
 ### Leaderboard
-![Leaderboard](screenshots/shot4.png)
+![Leaderboard](screenshots/shot4.jpg)
 *Competitive leaderboard displaying top fundraisers and overall statistics*
 
 ## 🛠️ Technology Stack
