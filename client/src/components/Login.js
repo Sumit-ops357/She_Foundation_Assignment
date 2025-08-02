@@ -383,7 +383,7 @@ const Login = ({ onLogin }) => {
                   overflow: 'hidden'
                 }}>
                   <img 
-                    src="/images/Image5.jpg" 
+                    src="/images/image5.jpg" 
                     alt="Education Support"
                     style={{
                       width: '100%',
