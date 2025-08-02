@@ -1,4 +1,4 @@
-# She Foundation - Women Empowerment Platform
+# She Foundation - Internportal
 
 A modern, responsive web application built for She Foundation, an NGO dedicated to uplifting and empowering underprivileged women. This platform features a beautiful glass morphism design with dummy authentication and comprehensive dashboard functionality.
 
