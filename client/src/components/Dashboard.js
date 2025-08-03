@@ -1,16 +1,90 @@
 import React, { useState, useEffect } from 'react';
+import { Line, Bar, Doughnut } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Dashboard = ({ user, token }) => {
   const [internData, setInternData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [fundraisingGoal, setFundraisingGoal] = useState(25000);
+  const [recentActivities, setRecentActivities] = useState([]);
 
   useEffect(() => {
     // Use the user data passed from login/signup instead of fetching from API
     setTimeout(() => {
       setInternData(user);
       setLoading(false);
-    }, 500); // Small delay for realistic feel
+      
+      // Generate mock recent activities
+      setRecentActivities([
+        { id: 1, type: 'donation', amount: 500, donor: 'Anonymous', date: '2024-01-15', message: 'Keep up the great work!' },
+        { id: 2, type: 'campaign', title: 'Education Fund Drive', raised: 2500, date: '2024-01-14' },
+        { id: 3, type: 'milestone', achievement: 'Reached 50% of goal', date: '2024-01-13' },
+        { id: 4, type: 'donation', amount: 1000, donor: 'Sarah Johnson', date: '2024-01-12', message: 'Supporting women empowerment!' },
+        { id: 5, type: 'badge', badge: 'Silver Badge', date: '2024-01-11' }
+      ]);
+    }, 500);
   }, [user]);
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(amount);
+  };
+
+  const getProgressPercentage = () => {
+    return Math.min((internData?.totalRaised / fundraisingGoal) * 100, 100);
+  };
+
+  const chartData = {
+    fundraising: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [{
+        label: 'Funds Raised',
+        data: [2000, 3500, 4200, 5800, 7200, internData?.totalRaised || 8500],
+        borderColor: 'rgb(99, 102, 241)',
+        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+        tension: 0.4
+      }]
+    },
+    categories: {
+      labels: ['Education', 'Healthcare', 'Skills Training', 'Emergency Aid'],
+      datasets: [{
+        label: 'Funds Allocated',
+        data: [45, 25, 20, 10],
+        backgroundColor: [
+          'rgba(99, 102, 241, 0.8)',
+          'rgba(118, 75, 162, 0.8)',
+          'rgba(240, 147, 251, 0.8)',
+          'rgba(245, 87, 108, 0.8)'
+        ]
+      }]
+    }
+  };
 
   if (loading) {
     return (
@@ -39,13 +113,6 @@ const Dashboard = ({ user, token }) => {
       </div>
     );
   }
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount);
-  };
 
   return (
     <div style={{ padding: '20px 0' }}>
@@ -101,364 +168,325 @@ const Dashboard = ({ user, token }) => {
             
             <div>
               <h1 style={{ 
-                fontSize: '3rem', 
-                fontWeight: '800', 
-                marginBottom: '8px',
-                fontFamily: 'Poppins, sans-serif',
-                color: 'white'
+                fontSize: '2.5rem', 
+                fontWeight: 'bold', 
+                color: 'white',
+                margin: '0 0 8px 0'
               }}>
-                Welcome back, {internData.name}! 👋
+                Welcome back, {internData.name}!
               </h1>
               <p style={{ 
                 color: 'rgba(255, 255, 255, 0.8)', 
-                fontSize: '1.2rem',
-                fontWeight: '400'
+                fontSize: '1.1rem',
+                margin: 0
               }}>
-                Track your fundraising progress and unlock amazing rewards
+                Continue making a difference in women's lives
               </p>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-        {/* Total Raised */}
-        <div className="card glass card-float" style={{
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            right: '0',
-            height: '4px',
-            background: 'linear-gradient(90deg, #10b981, #059669)',
-            transform: 'scaleX(1)'
-          }}></div>
-          
-          <div className="flex items-center justify-between mb-6">
-            <h3 style={{ 
-              fontSize: '1.25rem', 
-              fontWeight: '700', 
-              color: 'rgba(255, 255, 255, 0.9)',
-              fontFamily: 'Poppins, sans-serif'
+          {/* Progress Bar */}
+          <div style={{ marginBottom: '24px' }}>
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              marginBottom: '8px'
             }}>
-              Total Raised
-            </h3>
-            <div style={{
-              background: 'linear-gradient(135deg, #10b981, #059669)',
-              color: 'white',
-              padding: '6px 16px',
-              borderRadius: '20px',
-              fontSize: '0.875rem',
-              fontWeight: '600',
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-            }}>
-              Active
-            </div>
-          </div>
-          
-          <div style={{ 
-            fontSize: '3rem', 
-            fontWeight: '800', 
-            color: '#10b981',
-            marginBottom: '12px',
-            textShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-          }}>
-            {formatCurrency(internData.totalRaised)}
-          </div>
-          
-          <p style={{ 
-            color: 'rgba(255, 255, 255, 0.7)', 
-            fontSize: '1rem',
-            fontWeight: '500'
-          }}>
-            Keep up the amazing work! 🚀
-          </p>
-        </div>
-
-        {/* Referral Code */}
-        <div className="card glass card-float" style={{
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            right: '0',
-            height: '4px',
-            background: 'linear-gradient(90deg, #6366f1, #4f46e5)',
-            transform: 'scaleX(1)'
-          }}></div>
-          
-          <h3 style={{ 
-            fontSize: '1.25rem', 
-            fontWeight: '700', 
-            color: 'rgba(255, 255, 255, 0.9)',
-            marginBottom: '20px',
-            fontFamily: 'Poppins, sans-serif'
-          }}>
-            Your Referral Code
-          </h3>
-          
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.1)',
-            border: '2px dashed rgba(255, 255, 255, 0.3)',
-            borderRadius: '16px',
-            padding: '20px',
-            textAlign: 'center',
-            marginBottom: '16px',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s ease'
-          }}>
-            <code style={{
-              fontSize: '1.75rem',
-              fontWeight: '800',
-              color: '#fbbf24',
-              letterSpacing: '3px',
-              textShadow: '0 2px 8px rgba(251, 191, 36, 0.3)',
-              fontFamily: 'monospace'
-            }}>
-              {internData.referralCode}
-            </code>
-          </div>
-          
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(internData.referralCode);
-              alert('Referral code copied to clipboard!');
-            }}
-            className="btn btn-secondary glow"
-            style={{ 
-              width: '100%', 
-              fontSize: '1rem',
-              padding: '14px',
-              background: 'rgba(255, 255, 255, 0.2)',
-              border: '2px solid rgba(255, 255, 255, 0.3)',
-              color: 'white',
-              backdropFilter: 'blur(10px)'
-            }}
-          >
-            📋 Copy Code
-          </button>
-        </div>
-
-        {/* Progress */}
-        <div className="card glass card-float" style={{
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            right: '0',
-            height: '4px',
-            background: 'linear-gradient(90deg, #f59e0b, #d97706)',
-            transform: 'scaleX(1)'
-          }}></div>
-          
-          <h3 style={{ 
-            fontSize: '1.25rem', 
-            fontWeight: '700', 
-            color: 'rgba(255, 255, 255, 0.9)',
-            marginBottom: '20px',
-            fontFamily: 'Poppins, sans-serif'
-          }}>
-            Next Milestone
-          </h3>
-          
-          <div style={{ marginBottom: '16px' }}>
-            <div className="flex justify-between items-center mb-3">
-              <span style={{ 
-                fontSize: '1rem', 
-                color: 'rgba(255, 255, 255, 0.8)',
-                fontWeight: '500'
-              }}>
-                Progress to Gold Badge
-              </span>
-              <span style={{ 
-                fontSize: '1.125rem', 
-                fontWeight: '700', 
-                color: '#fbbf24',
-                textShadow: '0 2px 8px rgba(251, 191, 36, 0.3)'
-              }}>
-                {Math.round((internData.totalRaised / 15000) * 100)}%
+              <span style={{ color: 'white', fontWeight: '500' }}>Fundraising Progress</span>
+              <span style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                {formatCurrency(internData.totalRaised)} / {formatCurrency(fundraisingGoal)}
               </span>
             </div>
-            
             <div style={{
               width: '100%',
               height: '12px',
-              background: 'rgba(255, 255, 255, 0.1)',
+              background: 'rgba(255, 255, 255, 0.2)',
               borderRadius: '6px',
-              overflow: 'hidden',
-              backdropFilter: 'blur(10px)'
+              overflow: 'hidden'
             }}>
               <div style={{
-                width: `${Math.min((internData.totalRaised / 15000) * 100, 100)}%`,
+                width: `${getProgressPercentage()}%`,
                 height: '100%',
-                background: 'linear-gradient(90deg, #f59e0b, #d97706)',
-                transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 2px 8px rgba(245, 158, 11, 0.3)'
+                background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '6px',
+                transition: 'width 0.8s ease-in-out'
               }}></div>
             </div>
+            <p style={{ 
+              color: 'rgba(255, 255, 255, 0.7)', 
+              fontSize: '0.9rem',
+              margin: '8px 0 0 0'
+            }}>
+              {getProgressPercentage().toFixed(1)}% of your goal reached
+            </p>
           </div>
-          
-          <p style={{ 
-            color: 'rgba(255, 255, 255, 0.7)', 
-            fontSize: '1rem',
-            fontWeight: '500'
-          }}>
-            {formatCurrency(15000 - internData.totalRaised)} more to unlock Gold Badge 🏆
-          </p>
         </div>
       </div>
 
-      {/* Rewards Section */}
-      <div className="card glass" style={{
+      {/* Tab Navigation */}
+      <div style={{ 
+        display: 'flex', 
+        gap: '8px', 
+        marginBottom: '24px',
         background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
-        marginBottom: '32px'
+        padding: '8px',
+        borderRadius: '12px',
+        backdropFilter: 'blur(10px)'
       }}>
-        <h2 style={{ 
-          fontSize: '2rem', 
-          fontWeight: '800', 
-          color: 'rgba(255, 255, 255, 0.9)',
-          marginBottom: '32px',
-          fontFamily: 'Poppins, sans-serif',
-          textAlign: 'center'
-        }}>
-          🏆 Rewards & Achievements
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {internData.rewards.map((reward, index) => (
-            <div
-              key={reward.id}
-              className="card-float"
-              style={{
-                border: reward.unlocked ? '2px solid #10b981' : '2px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: '20px',
-                padding: '24px',
-                textAlign: 'center',
-                background: reward.unlocked 
-                  ? 'rgba(16, 185, 129, 0.1)' 
-                  : 'rgba(255, 255, 255, 0.05)',
-                backdropFilter: 'blur(15px)',
-                position: 'relative',
-                transition: 'all 0.3s ease',
-                animationDelay: `${index * 0.2}s`
-              }}
-            >
-              {reward.unlocked && (
-                <div style={{
-                  position: 'absolute',
-                  top: '-12px',
-                  right: '-12px',
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  color: 'white',
-                  borderRadius: '50%',
-                  width: '32px',
-                  height: '32px',
+        {['overview', 'analytics', 'activities', 'rewards'].map(tab => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{
+              padding: '12px 24px',
+              borderRadius: '8px',
+              border: 'none',
+              background: activeTab === tab 
+                ? 'rgba(99, 102, 241, 0.3)' 
+                : 'transparent',
+              color: 'white',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              textTransform: 'capitalize',
+              fontWeight: activeTab === tab ? '600' : '400'
+            }}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      <div style={{ minHeight: '400px' }}>
+        {activeTab === 'overview' && (
+          <div style={{ display: 'grid', gap: '24px', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+            {/* Stats Cards */}
+            <div className="card glass" style={{ padding: '24px' }}>
+              <h3 style={{ color: 'white', marginBottom: '16px' }}>Quick Stats</h3>
+              <div style={{ display: 'grid', gap: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Total Raised</span>
+                  <span style={{ color: 'white', fontWeight: '600' }}>{formatCurrency(internData.totalRaised)}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Campaigns</span>
+                  <span style={{ color: 'white', fontWeight: '600' }}>12</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Donors</span>
+                  <span style={{ color: 'white', fontWeight: '600' }}>156</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Referral Code</span>
+                  <span style={{ color: 'white', fontWeight: '600' }}>{internData.referralCode}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Rewards */}
+            <div className="card glass" style={{ padding: '24px' }}>
+              <h3 style={{ color: 'white', marginBottom: '16px' }}>Your Rewards</h3>
+              <div style={{ display: 'grid', gap: '12px' }}>
+                {internData.rewards.map(reward => (
+                  <div key={reward.id} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '12px',
+                    background: reward.unlocked 
+                      ? 'rgba(99, 102, 241, 0.2)' 
+                      : 'rgba(255, 255, 255, 0.05)',
+                    borderRadius: '8px',
+                    border: reward.unlocked 
+                      ? '1px solid rgba(99, 102, 241, 0.3)' 
+                      : '1px solid rgba(255, 255, 255, 0.1)'
+                  }}>
+                    <div style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '50%',
+                      background: reward.unlocked 
+                        ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
+                        : 'rgba(255, 255, 255, 0.2)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      {reward.unlocked && (
+                        <span style={{ fontSize: '12px', color: 'white' }}>✓</span>
+                      )}
+                    </div>
+                    <div>
+                      <div style={{ 
+                        color: reward.unlocked ? 'white' : 'rgba(255, 255, 255, 0.6)',
+                        fontWeight: '500'
+                      }}>
+                        {reward.name}
+                      </div>
+                      <div style={{ 
+                        color: reward.unlocked ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.4)',
+                        fontSize: '0.9rem'
+                      }}>
+                        {reward.description}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'analytics' && (
+          <div style={{ display: 'grid', gap: '24px', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))' }}>
+            <div className="card glass" style={{ padding: '24px' }}>
+              <h3 style={{ color: 'white', marginBottom: '16px' }}>Fundraising Trend</h3>
+              <Line 
+                data={chartData.fundraising}
+                options={{
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      labels: { color: 'white' }
+                    }
+                  },
+                  scales: {
+                    x: {
+                      ticks: { color: 'rgba(255, 255, 255, 0.8)' },
+                      grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    y: {
+                      ticks: { color: 'rgba(255, 255, 255, 0.8)' },
+                      grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    }
+                  }
+                }}
+              />
+            </div>
+
+            <div className="card glass" style={{ padding: '24px' }}>
+              <h3 style={{ color: 'white', marginBottom: '16px' }}>Fund Allocation</h3>
+              <Doughnut 
+                data={chartData.categories}
+                options={{
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: 'bottom',
+                      labels: { color: 'white' }
+                    }
+                  }
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'activities' && (
+          <div className="card glass" style={{ padding: '24px' }}>
+            <h3 style={{ color: 'white', marginBottom: '16px' }}>Recent Activities</h3>
+            <div style={{ display: 'grid', gap: '16px' }}>
+              {recentActivities.map(activity => (
+                <div key={activity.id} style={{
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '16px',
-                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)',
-                  animation: 'bounce 2s ease-in-out infinite'
+                  gap: '16px',
+                  padding: '16px',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
-                  ✓
+                  <div style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontSize: '1.2rem'
+                  }}>
+                    {activity.type === 'donation' && '💰'}
+                    {activity.type === 'campaign' && '📢'}
+                    {activity.type === 'milestone' && '🏆'}
+                    {activity.type === 'badge' && '🏅'}
+                  </div>
+                  
+                  <div style={{ flex: 1 }}>
+                    <div style={{ color: 'white', fontWeight: '500', marginBottom: '4px' }}>
+                      {activity.type === 'donation' && `${formatCurrency(activity.amount)} from ${activity.donor}`}
+                      {activity.type === 'campaign' && activity.title}
+                      {activity.type === 'milestone' && activity.achievement}
+                      {activity.type === 'badge' && `Earned ${activity.badge}`}
+                    </div>
+                    <div style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem' }}>
+                      {new Date(activity.date).toLocaleDateString()}
+                      {activity.message && ` • ${activity.message}`}
+                    </div>
+                  </div>
                 </div>
-              )}
-              
-              <div style={{
-                fontSize: '3rem',
-                marginBottom: '16px',
-                filter: reward.unlocked ? 'none' : 'grayscale(100%) opacity(0.5)'
-              }}>
-                {reward.unlocked ? '🏅' : '🔒'}
-              </div>
-              
-              <h3 style={{
-                fontSize: '1.25rem',
-                fontWeight: '700',
-                color: reward.unlocked ? '#10b981' : 'rgba(255, 255, 255, 0.6)',
-                marginBottom: '12px',
-                fontFamily: 'Poppins, sans-serif'
-              }}>
-                {reward.name}
-              </h3>
-              
-              <p style={{
-                fontSize: '1rem',
-                color: reward.unlocked ? 'rgba(16, 185, 129, 0.8)' : 'rgba(255, 255, 255, 0.5)',
-                marginBottom: '16px'
-              }}>
-                {reward.description}
-              </p>
-              
-              {reward.unlocked && (
-                <div style={{
-                  padding: '8px 16px',
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  color: 'white',
-                  borderRadius: '20px',
-                  fontSize: '0.875rem',
-                  fontWeight: '600',
-                  display: 'inline-block',
-                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-                }}>
-                  Unlocked
-                </div>
-              )}
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        )}
 
-      {/* Quick Actions */}
-      <div className="card glass" style={{
-        background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.2)'
-      }}>
-        <h3 style={{ 
-          fontSize: '1.5rem', 
-          fontWeight: '700', 
-          color: 'rgba(255, 255, 255, 0.9)',
-          marginBottom: '24px',
-          fontFamily: 'Poppins, sans-serif'
-        }}>
-          Quick Actions
-        </h3>
-        <div className="flex gap-6 flex-wrap">
-          <button className="btn btn-primary glow">
-            📤 Share Your Progress
-          </button>
-          <button className="btn btn-secondary glow">
-            🏆 View Leaderboard
-          </button>
-          <button className="btn btn-success glow">
-            📄 Download Certificate
-          </button>
-          <button className="btn btn-warning glow">
-            📊 View Analytics
-          </button>
-        </div>
+        {activeTab === 'rewards' && (
+          <div className="card glass" style={{ padding: '24px' }}>
+            <h3 style={{ color: 'white', marginBottom: '16px' }}>Available Rewards</h3>
+            <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
+              {[
+                { name: 'Bronze Badge', requirement: '$5,000', unlocked: true, icon: '🥉' },
+                { name: 'Silver Badge', requirement: '$10,000', unlocked: false, icon: '🥈' },
+                { name: 'Gold Badge', requirement: '$15,000', unlocked: false, icon: '🥇' },
+                { name: 'Platinum Badge', requirement: '$25,000', unlocked: false, icon: '💎' },
+                { name: 'Diamond Badge', requirement: '$50,000', unlocked: false, icon: '💠' },
+                { name: 'Founder Badge', requirement: '$100,000', unlocked: false, icon: '👑' }
+              ].map((reward, index) => (
+                <div key={index} style={{
+                  padding: '20px',
+                  background: reward.unlocked 
+                    ? 'rgba(99, 102, 241, 0.2)' 
+                    : 'rgba(255, 255, 255, 0.05)',
+                  borderRadius: '12px',
+                  border: reward.unlocked 
+                    ? '2px solid rgba(99, 102, 241, 0.5)' 
+                    : '1px solid rgba(255, 255, 255, 0.1)',
+                  textAlign: 'center',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '12px' }}>{reward.icon}</div>
+                  <div style={{ 
+                    color: reward.unlocked ? 'white' : 'rgba(255, 255, 255, 0.8)',
+                    fontWeight: '600',
+                    marginBottom: '8px'
+                  }}>
+                    {reward.name}
+                  </div>
+                  <div style={{ 
+                    color: reward.unlocked ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.6)',
+                    fontSize: '0.9rem'
+                  }}>
+                    Raise {reward.requirement}
+                  </div>
+                  {reward.unlocked && (
+                    <div style={{
+                      marginTop: '12px',
+                      padding: '6px 12px',
+                      background: 'rgba(99, 102, 241, 0.3)',
+                      borderRadius: '20px',
+                      fontSize: '0.8rem',
+                      color: 'white'
+                    }}>
+                      Unlocked
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
